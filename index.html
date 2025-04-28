@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Días Festivos Colombia</title>
+
+    <!-- Manifest para PWA -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Íconos para la aplicación -->
+    <link rel="icon" href="images/icons/icon-72x72.png">
+    
+    <!-- Meta información -->
+    <meta name="theme-color" content="#007BFF">
+    <meta name="description" content="Consulta los días festivos de Colombia para el año 2025.">
+
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Registro del Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('Service Worker registrado con éxito:', registration);
+                    })
+                    .catch(error => {
+                        console.log('Error al registrar el Service Worker:', error);
+                    });
+            });
+        }
+    </script>
+</head>
+<body>
+
+    <!-- Contenedor principal -->
+    <div id="app">
+        <!-- Menú inferior -->
+        <nav class="bottom-nav">
+            <ul>
+                <li><a href="#" id="inicio">Inicio</a></li>
+                <li><a href="#" id="favoritos">Favoritos</a></li>
+                <li><a href="#" id="buscar">Buscar</a></li>
+                <li><a href="#" id="informacion">Información</a></li> <!-- Cambié 'Filtrar' a 'Información' -->
+            </ul>
+        </nav>
+
+        <!-- Pestañas -->
+        <div id="tabs">
+            <div class="tab" id="inicio-tab">
+                <h1>Bienvenido a Días Festivos</h1>
+                <p>Consulta los días festivos de Colombia para el año 2025.</p>
+                <ul id="holidaysList"></ul> <!-- Aquí se mostrarán los días festivos -->
+            </div>
+            <div class="tab" id="favoritos-tab">
+                <h1>Favoritos</h1>
+                <ul id="favoritos-list"></ul>
+            </div>
+            <div class="tab" id="buscar-tab">
+                <h1>Buscar Día Festivo</h1>
+                <input type="text" id="searchInput" placeholder="Buscar festivo...">
+            </div>
+            <div class="tab" id="informacion-tab">
+                <h1>Información</h1>
+                <p>Aquí encontrarás información sobre los días festivos de Colombia.</p>
+            </div>
+            <div class="tab" id="ajustes-tab">
+                <h1>Ajustes</h1>
+                <p>Configura tu aplicación aquí.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts JS -->
+    <script>
+        // Función para mostrar pestañas
+        function showTab(tabId) {
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            const selectedTab = document.getElementById(tabId);
+            if (selectedTab) {
+                selectedTab.classList.add('active');
+            }
+        }
+
+        // Cuando el DOM esté cargado
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mostrar la pestaña de inicio
+            showTab('inicio-tab');
+
+            // Cambiar pestañas al hacer clic en el menú
+            const buttons = document.querySelectorAll('.bottom-nav a');
+            buttons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const id = button.id + '-tab';
+                    showTab(id);
+                });
+            });
+
+            // Cargar días festivos
+            fetchHolidays();
+        });
+
+        // Función para traer días festivos de la API
+        async function fetchHolidays() {
+            const holidaysList = document.getElementById('holidaysList');
+            try {
+                const response = await fetch('https://date.nager.at/Api/v2/PublicHolidays/2025/CO');
+                const data = await response.json();
+
+                // Llenar lista
+                holidaysList.innerHTML = '';
+                data.forEach(holiday => {
+                    const li = document.createElement('li');
+                    li.textContent = `${holiday.date}: ${holiday.localName}`;
+                    holidaysList.appendChild(li);
+                });
+            } catch (error) {
+                console.error('Error al cargar los días festivos:', error);
+                holidaysList.innerHTML = '<li>Error al cargar los días festivos.</li>';
+            }
+        }
+    </script>
+
+    <!-- Tus scripts externos -->
+    <script src="js/inicio.js"></script>
+    <script src="js/favoritos.js"></script>
+    <script src="js/buscar.js"></script>
+    <script src="js/informacion.js"></script>
+    <script src="js/ajuste.js"></script>
+
+</body>
+</html>

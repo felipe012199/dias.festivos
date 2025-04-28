@@ -1,0 +1,188 @@
+/* Estilos generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+.tab {
+    display: none;
+}
+
+/* Fondo general */
+body {
+    background-color: #f1f8ff; /* Color de fondo suave */
+    color: #000000; /* Negro para todo el texto */
+}
+
+/* Diseño de la aplicación */
+#app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Encabezado de las pestañas */
+#tabs {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+/* Estilo de las pestañas */
+.tab {
+    display: none; /* Oculta todas las pestañas por defecto */
+}
+
+.tab.active {
+    display: block; /* Muestra la pestaña activa */
+}
+
+h1 {
+    font-size: 24px;
+    color: #007BFF; /* Azul para los encabezados */
+    margin-bottom: 20px;
+}
+
+/* Pestaña de búsqueda */
+#buscar-tab input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    border: 1px solid #007BFF;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Estilo de los botones */
+button {
+    background-color: #007BFF;
+    color: #000000; /* Texto negro */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #0056b3; /* Color más oscuro para el hover */
+}
+
+/* Menú inferior */
+.bottom-nav {
+    background-color: #007BFF;
+    color: #000000;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.bottom-nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    padding: 0;
+}
+
+.bottom-nav li {
+    flex: 1;
+}
+
+.bottom-nav a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.bottom-nav a:hover {
+    background-color: #0056b3;
+    border-radius: 5px;
+}
+
+/* Pestañas con contenido */
+#favoritos-tab ul {
+    list-style: none;
+    padding: 0;
+}
+
+#favoritos-tab ul li {
+    background-color: #e1e7f1;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    color: #000000; /* Texto negro */
+}
+
+/* Estilo de los íconos */
+#tabs img {
+    width: 100px;
+    margin: 20px 0;
+}
+
+/* Estilos para los íconos de la PWA */
+link[rel="icon"] {
+    width: 32px;
+    height: 32px;
+}
+
+/* Pantalla de carga (Splash) */
+.splash-screen {
+    background-color: #007BFF;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    font-size: 30px;
+    font-weight: bold;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.splash-screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Estilos para la información y ajustes */
+#informacion-tab, #ajustes-tab {
+    background-color: #e1f1ff;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+/* Responsive design para dispositivos móviles */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 20px;
+    }
+
+    .bottom-nav ul {
+        flex-direction: column;
+    }
+
+    .bottom-nav li {
+        flex: none;
+    }
+}
+
+@media (max-width: 480px) {
+    button {
+        width: 100%;
+    }
+
+    #buscar-tab input {
+        width: 100%;
+    }
+}
